@@ -44,11 +44,11 @@ jobs:
         path: flatc
     # Below if only for release.
     - name: Zip file
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       run: zip Linux.flatc.binary.${{ matrix.cxx }}.zip flatc
     - name: Release zip file
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       with:
         files: Linux.flatc.binary.${{ matrix.cxx }}.zip
     - name: Generate SLSA subjects - clang
@@ -82,15 +82,15 @@ jobs:
         path: Release\flatc.exe
     # Below if only for release.
     - name: Zip file
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       run: move Release/flatc.exe . && Compress-Archive flatc.exe Windows.flatc.binary.zip
     - name: Release binary
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       with:
         files: Windows.flatc.binary.zip
     - name: Generate SLSA subjects
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       id: hash
       shell: bash
       run: echo "::set-output name=hashes::$(sha256sum Windows.flatc.binary.zip | base64 -w0)"
@@ -181,15 +181,15 @@ jobs:
         path: _build/Release/flatc
     # Below if only for release.
     - name: Zip file
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       run: mv _build/Release/flatc . && zip MacIntel.flatc.binary.zip flatc
     - name: Release binary
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       with:
         files: MacIntel.flatc.binary.zip
     - name: Generate SLSA subjects
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       id: hash
       run: echo "::set-output name=hashes::$(shasum -a 256 MacIntel.flatc.binary.zip | base64)"
 
@@ -223,15 +223,15 @@ jobs:
         path: _build/Release/flatc
     # Below if only for release.
     - name: Zip file
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       run: mv _build/Release/flatc . && zip Mac.flatc.binary.zip flatc
     - name: Release binary
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       with:
         files: Mac.flatc.binary.zip
     - name: Generate SLSA subjects
-      if: startsWith(github.ref, 'refs/tags/')
+      #if: startsWith(github.ref, 'refs/tags/')
       id: hash
       run: echo "::set-output name=hashes::$(shasum -a 256 Mac.flatc.binary.zip | base64)"
 
@@ -410,7 +410,7 @@ jobs:
         run: bash DartTest.sh
 
   release-disgests:
-    if: startsWith(github.ref, 'refs/tags/')
+    #if: startsWith(github.ref, 'refs/tags/')
     needs: [build-linux, build-windows, build-mac-intel, build-mac-universal]
     outputs:
       digests: ${{ steps.hash.outputs.digests }}
